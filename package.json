@@ -1,0 +1,47 @@
+{
+  "name": "hopr-types",
+  "author": {
+    "name": "Validity Labs AG",
+    "email": "info@validitylabs.org",
+    "url": "https://validitylabs.org"
+  },
+  "version": "0.3.0",
+  "description": "Custom types for HOPR",
+  "license": "GPL-3.0-only",
+  "keywords": [
+    "privacy",
+    "web3",
+    "messaging"
+  ],
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "engines": {
+    "node": "^12",
+    "yarn": "^1.19.2"
+  },
+  "homepage": "https://hopr.network",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hoprnet/hopr-types.git"
+  },
+  "scripts": {
+    "build": "tsc -d -p .",
+    "test": "npx mocha"
+  },
+  "devDependencies": {
+    "mocha": "^6.2.2",
+    "ts-node": "^8.5.4",
+    "typescript": "~3.7.3"
+  },
+  "mocha": {
+    "extension": [
+      "ts"
+    ],
+    "spec": "src/**/*.spec.ts",
+    "require": "ts-node/register"
+  },
+  "dependencies": {
+    "@types/node": "^12",
+    "multiaddr": "^7.2.1"
+  }
+}

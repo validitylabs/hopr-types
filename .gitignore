@@ -1,0 +1,11 @@
+# Exclude node.js stuff
+node_modules/
+
+# Exclude Typescript compiles
+lib/
+
+# Exclude VSCode stuff
+.vscode
+
+# Exclude yarn stuff
+yarn-error.log
