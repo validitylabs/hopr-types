@@ -1,6 +1,6 @@
 declare module 'peer-info' {
     import PeerId from 'peer-id'
-    import * as Multiaddr from 'multiaddr'
+    import Multiaddr from 'multiaddr'
 
     // Peer represents a peer on the IPFS network
     export default class PeerInfo {
