@@ -1,62 +1,55 @@
-declare module "cids" {
-    export default class CID {}
-}
-
-declare module "peer-id" {
-  import c from "libp2p-crypto";
-  import CID from "cids";
-
+declare module 'peer-id' {
   export type PeerIdJSON = {
-    id: string;
-    privKey: string;
-    pubKey: string;
-  };
+    id: string
+    privKey: string
+    pubKey: string
+  }
 
   export default class PeerId {
-    readonly id: Buffer;
-    privKey: any;
-    pubKey: any;
+    public readonly className: 'PeerId'
+    public readonly symbolName: '@libp2p/js-peer-id/PeerId'
 
-    private _id: Buffer;
-    private _idB58String: string;
+    readonly id: Buffer
+    privKey: any
+    pubKey: any
 
-    className: string;
-    symbolName: string;
+    private _id: Buffer
+    private _idB58String: string
 
-    constructor(id: Buffer, privKey?: any, pubKey?: any);
+    constructor(id: Buffer, privKey?: any, pubKey?: any)
 
     // Return the protobuf version of the public key, matching go ipfs formatting
-    marshalPubKey(): Buffer;
+    marshalPubKey(): Buffer
 
     // Return the protobuf version of the private key, matching go ipfs formatting
-    marshalPrivKey(): Buffer;
+    marshalPrivKey(): Buffer
 
     // Return the protobuf version of the peer-id
-    marshal(excludePriv?: boolean): Buffer;
+    marshal(excludePriv?: boolean): Buffer
 
-    toPrint(): string;
+    toPrint(): string
 
     // return the jsonified version of the key, matching the formatting
     // of go-ipfs for its config file
-    toJSON(): PeerIdJSON;
+    toJSON(): PeerIdJSON
 
     // encode/decode functions
-    toHexString(): string;
+    toHexString(): string
 
-    toBytes(): Buffer;
+    toBytes(): Buffer
 
-    toB58String(): string;
+    toB58String(): string
 
     // return self-describing String representation
     // in default format from RFC 0001: https://github.com/libp2p/specs/pull/209
-    toString(): string;
+    toString(): string
 
     /**
      * Checks the equality of `this` peer against a given PeerId.
      * @param {Buffer|PeerId} id
      * @returns {boolean}
      */
-    equals(id: Buffer | PeerId): boolean;
+    equals(id: Buffer | PeerId): boolean
 
     /**
      * Checks the equality of `this` peer against a given PeerId.
@@ -64,31 +57,31 @@ declare module "peer-id" {
      * @param {Buffer|PeerId} id
      * @returns {boolean}
      */
-    isEqual(id: Buffer | PeerId): boolean;
+    isEqual(id: Buffer | PeerId): boolean
 
     /*
      * Check if this PeerId instance is valid (privKey -> pubKey -> Id)
      */
-    isValid(): boolean;
+    isValid(): boolean
 
-    static create(opts?: { bits?: number; keyType?: string }): Promise<PeerId>;
+    static create(opts?: { bits?: number; keyType?: string }): Promise<PeerId>
 
-    static createFromHexString(str: string): PeerId;
+    static createFromHexString(str: string): PeerId
 
-    static createFromBytes(buf: Buffer): PeerId;
+    static createFromBytes(buf: Buffer): PeerId
 
-    static createFromB58String(str: string): PeerId;
+    static createFromB58String(str: string): PeerId
 
-    static createFromCID(cid: CID): PeerId;
+    static createFromCID(cid: any): PeerId
 
-    static createFromPubKey(key: Buffer | string): Promise<PeerId>;
+    static createFromPubKey(key: Buffer | string): Promise<PeerId>
 
-    static createFromPrivKey(key: Buffer | string): Promise<PeerId>;
+    static createFromPrivKey(key: Buffer | string): Promise<PeerId>
 
-    static createFromJSON(obj: PeerIdJSON): Promise<PeerId>;
+    static createFromJSON(obj: PeerIdJSON): Promise<PeerId>
 
-    static createFromProtobuf(buf: Buffer | string): Promise<PeerId>;
+    static createFromProtobuf(buf: Buffer | string): Promise<PeerId>
 
-    static isPeerId(peerId: any): peerId is PeerId;
+    static isPeerId(peerId: any): peerId is PeerId
   }
 }

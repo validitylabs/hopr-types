@@ -1,70 +1,75 @@
 declare module 'peer-info' {
-    import PeerId from 'peer-id'
-    import Multiaddr from 'multiaddr'
+  import PeerId from 'peer-id'
+  import { MultiaddrClass } from 'multiaddr'
 
-    // Peer represents a peer on the IPFS network
-    export default class PeerInfo {
-        public id: PeerId
-        public multiaddrs: MultiaddrSet
+  // Peer represents a peer on the IPFS network
+  export default class PeerInfo {
+    public id: PeerId
+    public multiaddrs: MultiaddrSet
 
-        private _connectedMultiaddr?: Multiaddr
+    private _connectedMultiaddr?: MultiaddrClass
 
-        /**
-         * Stores protocols this peers supports
-         */
-        public protocols: Set<string>
+    /**
+     * Stores protocols this peers supports
+     */
+    public protocols: Set<string>
 
-        constructor(peerId: PeerId)
+    constructor(peerId: PeerId)
 
-        // only stores the current multiaddr being used
-        connect(ma: Multiaddr): void
+    // only stores the current multiaddr being used
+    connect(ma: MultiaddrClass): void
 
-        disconnect(): void
-        isConnected(): Multiaddr | undefined
+    disconnect(): void
+    isConnected(): MultiaddrClass | undefined
 
-        static isPeerInfo(peerInfo: any): peerInfo is PeerInfo
+    static isPeerInfo(peerInfo: any): peerInfo is PeerInfo
 
-        static create(peerId?: PeerId): Promise<PeerInfo>
-    }
+    static create(peerId?: PeerId): Promise<PeerInfo>
+  }
 
-    export class MultiaddrSet {
-        private _multiaddrs?: Multiaddr[]
-        private _observedMultiaddrs?: Multiaddr[]
+  export class MultiaddrSet {
+    private _multiaddrs?: MultiaddrClass[]
+    private _observedMultiaddrs?: MultiaddrClass[]
 
-        constructor(multiaddrs?: Multiaddr[])
+    constructor(multiaddrs?: MultiaddrClass[])
 
-        readonly size: number
+    readonly size: number
 
-        add(ma: Multiaddr): void
+    add(ma: MultiaddrClass): void
 
-        // addSafe - prevent multiaddr explosion™
-        // Multiaddr explosion is when you dial to a bunch of nodes and every node
-        // gives you a different observed address and you start storing them all to
-        // share with other peers. This seems like a good idea until you realize that
-        // most of those addresses are unique to the subnet that peer is in and so,
-        // they are completely worthless for all the other peers. This method is
-        // exclusively used by identify.
-        addSafe(ma: Multiaddr): void
+    // addSafe - prevent multiaddr explosion™
+    // Multiaddr explosion is when you dial to a bunch of nodes and every node
+    // gives you a different observed address and you start storing them all to
+    // share with other peers. This seems like a good idea until you realize that
+    // most of those addresses are unique to the subnet that peer is in and so,
+    // they are completely worthless for all the other peers. This method is
+    // exclusively used by identify.
+    addSafe(ma: MultiaddrClass): void
 
-        toArray(): Multiaddr[]
+    toArray(): MultiaddrClass[]
 
-        forEach(fn: (ma: Multiaddr, index: number, array: Multiaddr[]) => void): void
+    forEach(fn: (ma: MultiaddrClass, index: number, array: MultiaddrClass[]) => void): void
 
-        filterBy(maFmt: { matches: (ma: Multiaddr) => boolean; partialMatch: (ma: Multiaddr) => boolean; toString: () => string }): Multiaddr[]
+    filterBy(maFmt: {
+      /* prettier-ignore */
+      matches: (ma: MultiaddrClass) => boolean;
+      partialMatch: (ma: MultiaddrClass) => boolean
+      toString: () => string
+    }): MultiaddrClass[]
 
-        has(ma: Multiaddr): boolean
+    has(ma: MultiaddrClass): boolean
 
-        delete(ma: Multiaddr): void
+    delete(ma: MultiaddrClass): void
 
-        // replaces selected existing multiaddrs with new ones
-        replace(existing: Multiaddr | Multiaddr[], fresh: Multiaddr | Multiaddr[]): void
+    // replaces selected existing multiaddrs with new ones
+    replace(existing: MultiaddrClass | MultiaddrClass[], fresh: MultiaddrClass | MultiaddrClass[]): void
 
-        clear(): void
+    clear(): void
 
-        // this only really helps make ip6 and ip4 multiaddrs distinct if they are
-        // different
-        // TODO this is not an ideal solution, probably this code should just be
-        // in libp2p-tcp
-        distinct(): Multiaddr[]
-    }
+    // this only really helps make ip6 and ip4 multiaddrs distinct if they are
+    // different
+    // TODO this is not an ideal solution, probably this code should just be
+    // in libp2p-tcp
+    distinct(): MultiaddrClass[]
+  }
 }

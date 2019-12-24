@@ -24,5 +24,13 @@
   },
   "devDependencies": {
     "@types/node": "^12"
+  },
+  "prettier": {
+    "printWidth": 160,
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true,
+    "quoteProps": "consistent",
+    "arrowParens": "avoid"
   }
 }

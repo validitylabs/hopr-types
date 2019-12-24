@@ -1,20 +1,36 @@
-declare module "multiaddr" {
-  type NodeAddress = { family: "IPv4" | "IPv6"; address: string; port: string };
-  export default class Multiaddr {
+declare module 'multiaddr' {
+  export type NodeAddress = {
+    family: 'IPv4' | 'IPv6'
+    address: string
+    port: string
+  }
+
+  export type MultiaddrOptions = {
+    family: 'ipv4' | 'ipv6'
+    host: string
+    transport: 'udp' | 'tcp'
+    port: number
+  }
+
+  export class MultiaddrClass {
+    public readonly buffer: Buffer
+
+    public readonly className: 'Multiaddr'
+    public readonly symbolName: '@multiformats/js-multiaddr/multiaddr'
     /**
      * Creates a [multiaddr](https://github.com/multiformats/multiaddr) from
      * a Buffer, String or another Multiaddr instance
      * public key.
      * @class Multiaddr
-     * @param {(String|Buffer|Multiaddr)} addr - If String or Buffer, needs to adhere
+     * @param {(String|Buffer|MultiaddrClass)} addr - If String or Buffer, needs to adhere
      * to the address format of a [multiaddr](https://github.com/multiformats/multiaddr#string-format)
      * @example
      * Multiaddr('/ip4/127.0.0.1/tcp/4001')
      * // <Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>
      */
-    constructor(addr: string | Buffer | Multiaddr);
+    constructor(addr: string | Buffer | MultiaddrClass)
 
-    isMultiAddr(ma: any): ma is Multiaddr;
+    isMultiAddr(ma: any): ma is MultiaddrClass
 
     /**
      * Returns Multiaddr as a String
@@ -24,7 +40,7 @@ declare module "multiaddr" {
      * Multiaddr('/ip4/127.0.0.1/tcp/4001').toString()
      * // '/ip4/127.0.0.1/tcp/4001'
      */
-    toString(): string;
+    toString(): string
 
     /**
      * Returns Multiaddr as a JSON encoded object
@@ -34,7 +50,7 @@ declare module "multiaddr" {
      * JSON.stringify(Multiaddr('/ip4/127.0.0.1/tcp/4001'))
      * // '/ip4/127.0.0.1/tcp/4001'
      */
-    toJSON(): string;
+    toJSON(): string
 
     /**
      * Returns Multiaddr as a convinient options object to be used with net.createConnection
@@ -44,12 +60,7 @@ declare module "multiaddr" {
      * Multiaddr('/ip4/127.0.0.1/tcp/4001').toOptions()
      * // { family: 'ipv4', host: '127.0.0.1', transport: 'tcp', port: 4001 }
      */
-    toOptions(): {
-      family: "ipv4" | "ipv6";
-      host: string;
-      transport: "udp" | "tcp";
-      port: number;
-    };
+    toOptions(): MultiaddrOptions
 
     /**
      * Returns Multiaddr as a human-readable string
@@ -59,7 +70,7 @@ declare module "multiaddr" {
      * Multiaddr('/ip4/127.0.0.1/tcp/4001').inspect()
      * // '<Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>'
      */
-    inspect(): string;
+    inspect(): string
 
     /**
      * Returns the protocols the Multiaddr is defined with, as an array of objects, in
@@ -76,7 +87,7 @@ declare module "multiaddr" {
      * // [ { code: 4, size: 32, name: 'ip4' },
      * //   { code: 6, size: 16, name: 'tcp' } ]
      */
-    protos(): { code: number; size: number; name: string }[];
+    protos(): { code: number; size: number; name: string }[]
 
     /**
      * Returns the codes of the protocols in left-to-right order.
@@ -87,7 +98,7 @@ declare module "multiaddr" {
      * Multiaddr('/ip4/127.0.0.1/tcp/4001').protoCodes()
      * // [ 4, 6 ]
      */
-    protoCodes(): number[];
+    protoCodes(): number[]
 
     /**
      * Returns the names of the protocols in left-to-right order.
@@ -98,7 +109,7 @@ declare module "multiaddr" {
      * Multiaddr('/ip4/127.0.0.1/tcp/4001').protoNames()
      * // [ 'ip4', 'tcp' ]
      */
-    protoNames(): string[];
+    protoNames(): string[]
 
     /**
      * Returns a tuple of parts
@@ -110,7 +121,7 @@ declare module "multiaddr" {
      * Multiaddr("/ip4/127.0.0.1/tcp/4001").tuples()
      * // [ [ 4, <Buffer 7f 00 00 01> ], [ 6, <Buffer 0f a1> ] ]
      */
-    tuples(): [number, Buffer][];
+    tuples(): [number, Buffer][]
 
     /**
      * Returns a tuple of string/number parts
@@ -122,13 +133,13 @@ declare module "multiaddr" {
      * Multiaddr("/ip4/127.0.0.1/tcp/4001").stringTuples()
      * // [ [ 4, '127.0.0.1' ], [ 6, 4001 ] ]
      */
-    stringTuples(): [number, string][];
+    stringTuples(): [number, string][]
 
     /**
      * Encapsulates a Multiaddr in another Multiaddr
      *
-     * @param {Multiaddr} addr - Multiaddr to add into this Multiaddr
-     * @return {Multiaddr}
+     * @param {MultiaddrClass} addr - Multiaddr to add into this Multiaddr
+     * @return {MultiaddrClass}
      * @example
      * const mh1 = Multiaddr('/ip4/8.8.8.8/tcp/1080')
      * // <Multiaddr 0408080808060438 - /ip4/8.8.8.8/tcp/1080>
@@ -142,13 +153,13 @@ declare module "multiaddr" {
      * mh3.toString()
      * // '/ip4/8.8.8.8/tcp/1080/ip4/127.0.0.1/tcp/4001'
      */
-    encapsulate(addr: Multiaddr): Multiaddr;
+    encapsulate(addr: MultiaddrClass): MultiaddrClass
 
     /**
      * Decapsulates a Multiaddr from another Multiaddr
      *
-     * @param {Multiaddr} addr - Multiaddr to remove from this Multiaddr
-     * @return {Multiaddr}
+     * @param {MultiaddrClass} addr - Multiaddr to remove from this Multiaddr
+     * @return {MultiaddrClass}
      * @example
      * const mh1 = Multiaddr('/ip4/8.8.8.8/tcp/1080')
      * // <Multiaddr 0408080808060438 - /ip4/8.8.8.8/tcp/1080>
@@ -162,7 +173,7 @@ declare module "multiaddr" {
      * mh3.decapsulate(mh2).toString()
      * // '/ip4/8.8.8.8/tcp/1080'
      */
-    decapsulate(addr: Multiaddr): Multiaddr;
+    decapsulate(addr: MultiaddrClass): MultiaddrClass
 
     /**
      * A more reliable version of `decapsulate` if you are targeting a
@@ -171,7 +182,7 @@ declare module "multiaddr" {
      * If the code is not present, the original `Multiaddr` is returned.
      *
      * @param {Number} code The code of the protocol to decapsulate from this Multiaddr
-     * @return {Multiaddr}
+     * @return {MultiaddrClass}
      * @example
      * const addr = Multiaddr('/ip4/0.0.0.0/tcp/8080/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC')
      * // <Multiaddr 0400... - /ip4/0.0.0.0/tcp/8080/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC>
@@ -182,7 +193,7 @@ declare module "multiaddr" {
      * Multiaddr('/ip4/127.0.0.1/tcp/8080').decapsulateCode(421).toString()
      * // '/ip4/127.0.0.1/tcp/8080'
      */
-    decapsulateCode(code: number): Multiaddr;
+    decapsulateCode(code: number): MultiaddrClass
 
     /**
      * Extract the peerId if the multiaddr contains one
@@ -195,7 +206,7 @@ declare module "multiaddr" {
      * // should return QmValidBase58string or null if the id is missing or invalid
      * const peerId = mh1.getPeerId()
      */
-    getPeerId(): string;
+    getPeerId(): string
 
     /**
      * Extract the path if the multiaddr contains one
@@ -208,12 +219,12 @@ declare module "multiaddr" {
      * // should return utf8 string or null if the id is missing or invalid
      * const path = mh1.getPath()
      */
-    getPath(): string | null;
+    getPath(): string | null
 
     /**
      * Checks if two Multiaddrs are the same
      *
-     * @param {Multiaddr} addr
+     * @param {MultiaddrClass} addr
      * @return {Bool}
      * @example
      * const mh1 = Multiaddr('/ip4/8.8.8.8/tcp/1080')
@@ -228,7 +239,7 @@ declare module "multiaddr" {
      * mh1.equals(mh2)
      * // false
      */
-    equals(addr: Multiaddr): boolean;
+    equals(addr: MultiaddrClass): boolean
 
     /**
      * Gets a Multiaddrs node-friendly address object. Note that protocol information
@@ -243,21 +254,21 @@ declare module "multiaddr" {
      * Multiaddr('/ip4/127.0.0.1/tcp/4001').nodeAddress()
      * // {family: 'IPv4', address: '127.0.0.1', port: '4001'}
      */
-    nodeAddress(): NodeAddress;
+    nodeAddress(): NodeAddress
 
     /**
      * Creates a Multiaddr from a node-friendly address object
      *
      * @param {{family: String, address: String, port: Number}} addr
      * @param {String} transport
-     * @returns {Multiaddr} multiaddr
+     * @returns {MultiaddrClass} multiaddr
      * @throws {Error} Throws error if addr is not truthy
      * @throws {Error} Throws error if transport is not truthy
      * @example
      * Multiaddr.fromNodeAddress({address: '127.0.0.1', port: '4001'}, 'tcp')
      * // <Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>
      */
-    fromNodeAddress(addr: NodeAddress, transport: "tcp" | "udp"): Multiaddr;
+    fromNodeAddress(addr: NodeAddress, transport: 'tcp' | 'udp'): MultiaddrClass
 
     // TODO find a better example, not sure about it's good enough
     /**
@@ -267,7 +278,7 @@ declare module "multiaddr" {
      *
      * `{IPv4, IPv6}/{TCP, UDP}`
      *
-     * @param {Multiaddr} [addr] - Defaults to using `this` instance
+     * @param {MultiaddrClass} [addr] - Defaults to using `this` instance
      * @returns {Boolean} isThinWaistAddress
      * @example
      * const mh1 = Multiaddr('/ip4/127.0.0.1/tcp/4001')
@@ -283,7 +294,7 @@ declare module "multiaddr" {
      * mh3.isThinWaistAddress()
      * // false
      */
-    isThinWaistAddress(addr?: Multiaddr): boolean;
+    isThinWaistAddress(addr?: MultiaddrClass): boolean
 
     /**
      * Object containing table, names and codes of all supported protocols.
@@ -297,25 +308,27 @@ declare module "multiaddr" {
      *
      */
     protocols: {
-      table: any[];
-      names: any;
-      codes: any;
-    };
+      table: any[]
+      names: any
+      codes: any
+    }
 
     /**
      * Returns if something is a Multiaddr that is a name
      *
-     * @param {Multiaddr} addr
+     * @param {MultiaddrClass} addr
      * @return {Bool} isName
      */
-    isName(addr: Multiaddr): boolean;
+    isName(addr: MultiaddrClass): boolean
     /**
      * Returns an array of multiaddrs, by resolving the multiaddr that is a name
      *
      * @async
-     * @param {Multiaddr} addr
-     * @return {Multiaddr[]}
+     * @param {MultiaddrClass} addr
+     * @return {MultiaddrClass[]}
      */
-    resolve(addr: Multiaddr): Promise<Multiaddr[]>;
+    resolve(addr: MultiaddrClass): Promise<MultiaddrClass[]>
   }
+
+  export default function Multiaddr(addr: string | Buffer | MultiaddrClass): MultiaddrClass
 }
