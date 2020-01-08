@@ -5,18 +5,13 @@ declare module 'peer-id' {
     pubKey: string
   }
 
-  export default class PeerId {
-    public readonly className: 'PeerId'
-    public readonly symbolName: '@libp2p/js-peer-id/PeerId'
+  export interface PeerIdClass {
+    readonly className: 'PeerId'
+    readonly symbolName: '@libp2p/js-peer-id/PeerId'
 
     readonly id: Buffer
     privKey: any
     pubKey: any
-
-    private _id: Buffer
-    private _idB58String: string
-
-    constructor(id: Buffer, privKey?: any, pubKey?: any)
 
     // Return the protobuf version of the public key, matching go ipfs formatting
     marshalPubKey(): Buffer
@@ -63,25 +58,29 @@ declare module 'peer-id' {
      * Check if this PeerId instance is valid (privKey -> pubKey -> Id)
      */
     isValid(): boolean
+  }
 
-    static create(opts?: { bits?: number; keyType?: string }): Promise<PeerId>
+  export default interface PeerId {
+    new (id: Buffer, privKey?: any, pubKey?: any): PeerIdClass
 
-    static createFromHexString(str: string): PeerId
+    create(opts?: { bits?: number; keyType?: string }): Promise<PeerIdClass>
 
-    static createFromBytes(buf: Buffer): PeerId
+    createFromHexString(str: string): PeerIdClass
 
-    static createFromB58String(str: string): PeerId
+    createFromBytes(buf: Buffer): PeerIdClass
 
-    static createFromCID(cid: any): PeerId
+    createFromB58String(str: string): PeerIdClass
 
-    static createFromPubKey(key: Buffer | string): Promise<PeerId>
+    createFromCID(cid: any): PeerIdClass
 
-    static createFromPrivKey(key: Buffer | string): Promise<PeerId>
+    createFromPubKey(key: Buffer | string): Promise<PeerIdClass>
 
-    static createFromJSON(obj: PeerIdJSON): Promise<PeerId>
+    createFromPrivKey(key: Buffer | string): Promise<PeerIdClass>
 
-    static createFromProtobuf(buf: Buffer | string): Promise<PeerId>
+    createFromJSON(obj: PeerIdJSON): Promise<PeerIdClass>
 
-    static isPeerId(peerId: any): peerId is PeerId
+    createFromProtobuf(buf: Buffer | string): Promise<PeerIdClass>
+
+    isPeerId(peerId: any): peerId is PeerIdClass
   }
 }

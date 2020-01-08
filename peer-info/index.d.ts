@@ -1,38 +1,32 @@
+import { PeerIdClass } from 'peer-id'
+import { MultiaddrClass } from 'multiaddr'
+
 declare module 'peer-info' {
-  import PeerId from 'peer-id'
-  import { MultiaddrClass } from 'multiaddr'
-
-  // Peer represents a peer on the IPFS network
-  export default class PeerInfo {
-    public id: PeerId
-    public multiaddrs: MultiaddrSet
-
-    private _connectedMultiaddr?: MultiaddrClass
+  export interface PeerInfoClass {
+    id: PeerIdClass
+    multiaddrs: MultiaddrSet
 
     /**
      * Stores protocols this peers supports
      */
-    public protocols: Set<string>
-
-    constructor(peerId: PeerId)
+    protocols: Set<string>
 
     // only stores the current multiaddr being used
     connect(ma: MultiaddrClass): void
 
     disconnect(): void
     isConnected(): MultiaddrClass | undefined
-
-    static isPeerInfo(peerInfo: any): peerInfo is PeerInfo
-
-    static create(peerId?: PeerId): Promise<PeerInfo>
   }
 
-  export class MultiaddrSet {
-    private _multiaddrs?: MultiaddrClass[]
-    private _observedMultiaddrs?: MultiaddrClass[]
+  export default interface PeerInfo {
+    new (peerId: PeerIdClass): PeerInfoClass
 
-    constructor(multiaddrs?: MultiaddrClass[])
+    isPeerInfo(peerInfo: any): peerInfo is PeerInfoClass
 
+    create(peerId?: PeerIdClass): Promise<PeerInfoClass>
+  }
+
+  export interface MultiaddrSetClass {
     readonly size: number
 
     add(ma: MultiaddrClass): void
@@ -71,5 +65,9 @@ declare module 'peer-info' {
     // TODO this is not an ideal solution, probably this code should just be
     // in libp2p-tcp
     distinct(): MultiaddrClass[]
+  }
+
+  export interface MultiaddrSet {
+    new (multiaddrs?: MultiaddrClass[]): MultiaddrSetClass
   }
 }

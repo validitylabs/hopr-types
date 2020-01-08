@@ -256,20 +256,6 @@ declare module 'multiaddr' {
      */
     nodeAddress(): NodeAddress
 
-    /**
-     * Creates a Multiaddr from a node-friendly address object
-     *
-     * @param {{family: String, address: String, port: Number}} addr
-     * @param {String} transport
-     * @returns {MultiaddrClass} multiaddr
-     * @throws {Error} Throws error if addr is not truthy
-     * @throws {Error} Throws error if transport is not truthy
-     * @example
-     * Multiaddr.fromNodeAddress({address: '127.0.0.1', port: '4001'}, 'tcp')
-     * // <Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>
-     */
-    fromNodeAddress(addr: NodeAddress, transport: 'tcp' | 'udp'): MultiaddrClass
-
     // TODO find a better example, not sure about it's good enough
     /**
      * Returns if a Multiaddr is a Thin Waist address or not.
@@ -312,6 +298,24 @@ declare module 'multiaddr' {
       names: any
       codes: any
     }
+  }
+
+  export default interface Multiaddr {
+    new (addr: string | Buffer | MultiaddrClass): MultiaddrClass
+
+    /**
+     * Creates a Multiaddr from a node-friendly address object
+     *
+     * @param {{family: String, address: String, port: Number}} addr
+     * @param {String} transport
+     * @returns {MultiaddrClass} multiaddr
+     * @throws {Error} Throws error if addr is not truthy
+     * @throws {Error} Throws error if transport is not truthy
+     * @example
+     * Multiaddr.fromNodeAddress({address: '127.0.0.1', port: '4001'}, 'tcp')
+     * // <Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>
+     */
+    fromNodeAddress(addr: NodeAddress, transport: 'tcp' | 'udp'): MultiaddrClass
 
     /**
      * Returns if something is a Multiaddr that is a name
@@ -320,6 +324,7 @@ declare module 'multiaddr' {
      * @return {Bool} isName
      */
     isName(addr: MultiaddrClass): boolean
+
     /**
      * Returns an array of multiaddrs, by resolving the multiaddr that is a name
      *
@@ -329,6 +334,4 @@ declare module 'multiaddr' {
      */
     resolve(addr: MultiaddrClass): Promise<MultiaddrClass[]>
   }
-
-  export default function Multiaddr(addr: string | Buffer | MultiaddrClass): MultiaddrClass
 }
