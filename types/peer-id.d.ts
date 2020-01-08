@@ -5,7 +5,9 @@ declare module 'peer-id' {
     pubKey: string
   }
 
-  export interface PeerIdClass {
+  export default class PeerId {
+    constructor (id: Buffer, privKey?: any, pubKey?: any)
+
     readonly className: 'PeerId'
     readonly symbolName: '@libp2p/js-peer-id/PeerId'
 
@@ -58,29 +60,25 @@ declare module 'peer-id' {
      * Check if this PeerId instance is valid (privKey -> pubKey -> Id)
      */
     isValid(): boolean
-  }
 
-  export default interface PeerId {
-    new (id: Buffer, privKey?: any, pubKey?: any): PeerIdClass
+    static create(opts?: { bits?: number; keyType?: string }): Promise<PeerId>
 
-    create(opts?: { bits?: number; keyType?: string }): Promise<PeerIdClass>
+    static createFromHexString(str: string): PeerId
 
-    createFromHexString(str: string): PeerIdClass
+    static createFromBytes(buf: Buffer): PeerId
 
-    createFromBytes(buf: Buffer): PeerIdClass
+    static createFromB58String(str: string): PeerId
 
-    createFromB58String(str: string): PeerIdClass
+    static createFromCID(cid: any): PeerId
 
-    createFromCID(cid: any): PeerIdClass
+    static createFromPubKey(key: Buffer | string): Promise<PeerId>
 
-    createFromPubKey(key: Buffer | string): Promise<PeerIdClass>
+    static createFromPrivKey(key: Buffer | string): Promise<PeerId>
 
-    createFromPrivKey(key: Buffer | string): Promise<PeerIdClass>
+    static createFromJSON(obj: PeerIdJSON): Promise<PeerId>
 
-    createFromJSON(obj: PeerIdJSON): Promise<PeerIdClass>
+    static createFromProtobuf(buf: Buffer | string): Promise<PeerId>
 
-    createFromProtobuf(buf: Buffer | string): Promise<PeerIdClass>
-
-    isPeerId(peerId: any): peerId is PeerIdClass
+    static isPeerId(peerId: any): peerId is PeerId
   }
 }

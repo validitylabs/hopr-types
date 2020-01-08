@@ -1,9 +1,11 @@
 declare module 'peer-info' {
-  import { PeerIdClass } from 'peer-id'
+  import PeerId from 'peer-id'
   import { MultiaddrClass } from 'multiaddr'
 
-  export interface PeerInfoClass {
-    id: PeerIdClass
+  export default class PeerInfo {
+    constructor (peerId: PeerId)
+
+    readonly id: PeerId
     multiaddrs: MultiaddrSet
 
     /**
@@ -16,17 +18,14 @@ declare module 'peer-info' {
 
     disconnect(): void
     isConnected(): MultiaddrClass | undefined
+
+    static isPeerInfo(peerInfo: any): peerInfo is PeerInfo
+
+    static create(peerId?: PeerId): Promise<PeerInfo>
   }
 
-  export default interface PeerInfo {
-    new (peerId: PeerIdClass): PeerInfoClass
 
-    isPeerInfo(peerInfo: any): peerInfo is PeerInfoClass
-
-    create(peerId?: PeerIdClass): Promise<PeerInfoClass>
-  }
-
-  export interface MultiaddrSetClass {
+  export class MultiaddrSet {
     readonly size: number
 
     add(ma: MultiaddrClass): void
@@ -68,6 +67,6 @@ declare module 'peer-info' {
   }
 
   export interface MultiaddrSet {
-    new (multiaddrs?: MultiaddrClass[]): MultiaddrSetClass
+    new (multiaddrs?: MultiaddrClass[]): MultiaddrSet
   }
 }

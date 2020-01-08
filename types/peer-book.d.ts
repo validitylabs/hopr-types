@@ -1,16 +1,18 @@
 declare module 'peer-book' {
   import Multiaddr, { MultiaddrClass } from 'multiaddr'
   import PeerId from 'peer-id'
-  import { PeerInfoClass } from 'peer-info'
+  import PeerInfo from 'peer-info'
 
-  export interface PeerBookClass {
+  export class PeerBookClass {
     _peers: {
-      [index: string]: PeerInfoClass
+      [index: string]: PeerInfo
     }
+
+    constructor()
 
     // checks if peer exists
     // peer can be PeerId, b58String or PeerInfo
-    has(peer: PeerId | PeerInfoClass | string): boolean
+    has(peer: PeerId | PeerInfo | string): boolean
 
     /**
      * Stores a peerInfo, if already exist, merges the new into the old.
@@ -18,25 +20,21 @@ declare module 'peer-book' {
      * @param peerInfo
      * @param replace
      */
-    put(peerInfo: PeerInfoClass, replace?: boolean): PeerInfoClass
+    put(peerInfo: PeerInfo, replace?: boolean): PeerInfo
 
     /**
      * Get the info to the given PeerId, PeerInfo or b58Str id
      *
      * @param peer
      */
-    get(peer: PeerId): PeerInfoClass
+    get(peer: PeerId): PeerInfo
 
     getAll(): this['_peers']
 
-    getAllArray(): PeerInfoClass[]
+    getAllArray(): PeerInfo[]
 
-    getMultiaddrs(peer: PeerInfoClass): MultiaddrClass
+    getMultiaddrs(peer: PeerInfo): MultiaddrClass
 
-    remove(peer: PeerInfoClass): void
-  }
-
-  export interface PeerBook {
-    new (): PeerBookClass
+    remove(peer: PeerInfo): void
   }
 }
