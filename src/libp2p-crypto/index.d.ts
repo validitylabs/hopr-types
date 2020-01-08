@@ -1,6 +1,6 @@
-import { secp256k1, Secp256k1PublicKey, Secp256k1PrivateKey } from 'libp2p-crypto-secp256k1'
-
 declare module 'libp2p-crypto' {
+  import { secp256k1, Secp256k1PublicKey, Secp256k1PrivateKey } from 'libp2p-crypto-secp256k1'
+
   export namespace keys {
     // export type keyType
     export const supportedKeys: {

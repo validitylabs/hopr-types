@@ -1,7 +1,7 @@
-import { PeerIdClass } from 'peer-id'
-import { MultiaddrClass } from 'multiaddr'
-
 declare module 'peer-info' {
+  import { PeerIdClass } from 'peer-id'
+  import { MultiaddrClass } from 'multiaddr'
+
   export interface PeerInfoClass {
     id: PeerIdClass
     multiaddrs: MultiaddrSet

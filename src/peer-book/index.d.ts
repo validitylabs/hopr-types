@@ -1,8 +1,8 @@
-import Multiaddr, { MultiaddrClass } from 'multiaddr'
-import PeerId from 'peer-id'
-import { PeerInfoClass } from 'peer-info'
-
 declare module 'peer-book' {
+  import Multiaddr, { MultiaddrClass } from 'multiaddr'
+  import PeerId from 'peer-id'
+  import { PeerInfoClass } from 'peer-info'
+
   export interface PeerBookClass {
     _peers: {
       [index: string]: PeerInfoClass
