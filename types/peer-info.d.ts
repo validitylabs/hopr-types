@@ -1,6 +1,6 @@
 declare module 'peer-info' {
   import PeerId from 'peer-id'
-  import { MultiaddrClass } from 'multiaddr'
+  import Multiaddr from 'multiaddr'
 
   export default class PeerInfo {
     constructor (peerId: PeerId)
@@ -14,10 +14,10 @@ declare module 'peer-info' {
     protocols: Set<string>
 
     // only stores the current multiaddr being used
-    connect(ma: MultiaddrClass): void
+    connect(ma: Multiaddr): void
 
     disconnect(): void
-    isConnected(): MultiaddrClass | undefined
+    isConnected(): Multiaddr | undefined
 
     static isPeerInfo(peerInfo: any): peerInfo is PeerInfo
 
@@ -28,7 +28,7 @@ declare module 'peer-info' {
   export class MultiaddrSet {
     readonly size: number
 
-    add(ma: MultiaddrClass): void
+    add(ma: Multiaddr): void
 
     // addSafe - prevent multiaddr explosion™
     // Multiaddr explosion is when you dial to a bunch of nodes and every node
@@ -37,25 +37,25 @@ declare module 'peer-info' {
     // most of those addresses are unique to the subnet that peer is in and so,
     // they are completely worthless for all the other peers. This method is
     // exclusively used by identify.
-    addSafe(ma: MultiaddrClass): void
+    addSafe(ma: Multiaddr): void
 
-    toArray(): MultiaddrClass[]
+    toArray(): Multiaddr[]
 
-    forEach(fn: (ma: MultiaddrClass, index: number, array: MultiaddrClass[]) => void): void
+    forEach(fn: (ma: Multiaddr, index: number, array: Multiaddr[]) => void): void
 
     filterBy(maFmt: {
       /* prettier-ignore */
-      matches: (ma: MultiaddrClass) => boolean;
-      partialMatch: (ma: MultiaddrClass) => boolean
+      matches: (ma: Multiaddr) => boolean;
+      partialMatch: (ma: Multiaddr) => boolean
       toString: () => string
-    }): MultiaddrClass[]
+    }): Multiaddr[]
 
-    has(ma: MultiaddrClass): boolean
+    has(ma: Multiaddr): boolean
 
-    delete(ma: MultiaddrClass): void
+    delete(ma: Multiaddr): void
 
     // replaces selected existing multiaddrs with new ones
-    replace(existing: MultiaddrClass | MultiaddrClass[], fresh: MultiaddrClass | MultiaddrClass[]): void
+    replace(existing: Multiaddr | Multiaddr[], fresh: Multiaddr | Multiaddr[]): void
 
     clear(): void
 
@@ -63,10 +63,10 @@ declare module 'peer-info' {
     // different
     // TODO this is not an ideal solution, probably this code should just be
     // in libp2p-tcp
-    distinct(): MultiaddrClass[]
+    distinct(): Multiaddr[]
   }
 
   export interface MultiaddrSet {
-    new (multiaddrs?: MultiaddrClass[]): MultiaddrSet
+    new (multiaddrs?: Multiaddr[]): MultiaddrSet
   }
 }

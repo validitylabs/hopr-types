@@ -12,7 +12,7 @@ declare module 'multiaddr' {
     port: number
   }
 
-  export class MultiaddrClass {
+  export default class Multiaddr {
     public readonly buffer: Buffer
 
     public readonly className: 'Multiaddr'
@@ -28,9 +28,9 @@ declare module 'multiaddr' {
      * Multiaddr('/ip4/127.0.0.1/tcp/4001')
      * // <Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>
      */
-    constructor(addr: string | Buffer | MultiaddrClass)
+    constructor(addr: string | Buffer | Multiaddr)
 
-    isMultiAddr(ma: any): ma is MultiaddrClass
+    isMultiAddr(ma: any): ma is Multiaddr
 
     /**
      * Returns Multiaddr as a String
@@ -153,7 +153,7 @@ declare module 'multiaddr' {
      * mh3.toString()
      * // '/ip4/8.8.8.8/tcp/1080/ip4/127.0.0.1/tcp/4001'
      */
-    encapsulate(addr: MultiaddrClass): MultiaddrClass
+    encapsulate(addr: Multiaddr): Multiaddr
 
     /**
      * Decapsulates a Multiaddr from another Multiaddr
@@ -173,7 +173,7 @@ declare module 'multiaddr' {
      * mh3.decapsulate(mh2).toString()
      * // '/ip4/8.8.8.8/tcp/1080'
      */
-    decapsulate(addr: MultiaddrClass): MultiaddrClass
+    decapsulate(addr: Multiaddr): Multiaddr
 
     /**
      * A more reliable version of `decapsulate` if you are targeting a
@@ -193,7 +193,7 @@ declare module 'multiaddr' {
      * Multiaddr('/ip4/127.0.0.1/tcp/8080').decapsulateCode(421).toString()
      * // '/ip4/127.0.0.1/tcp/8080'
      */
-    decapsulateCode(code: number): MultiaddrClass
+    decapsulateCode(code: number): Multiaddr
 
     /**
      * Extract the peerId if the multiaddr contains one
@@ -239,7 +239,7 @@ declare module 'multiaddr' {
      * mh1.equals(mh2)
      * // false
      */
-    equals(addr: MultiaddrClass): boolean
+    equals(addr: Multiaddr): boolean
 
     /**
      * Gets a Multiaddrs node-friendly address object. Note that protocol information
@@ -280,7 +280,7 @@ declare module 'multiaddr' {
      * mh3.isThinWaistAddress()
      * // false
      */
-    isThinWaistAddress(addr?: MultiaddrClass): boolean
+    isThinWaistAddress(addr?: Multiaddr): boolean
 
     /**
      * Object containing table, names and codes of all supported protocols.
@@ -298,10 +298,6 @@ declare module 'multiaddr' {
       names: any
       codes: any
     }
-  }
-
-  export default interface Multiaddr {
-    new (addr: string | Buffer | MultiaddrClass): MultiaddrClass
 
     /**
      * Creates a Multiaddr from a node-friendly address object
@@ -315,7 +311,7 @@ declare module 'multiaddr' {
      * Multiaddr.fromNodeAddress({address: '127.0.0.1', port: '4001'}, 'tcp')
      * // <Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>
      */
-    fromNodeAddress(addr: NodeAddress, transport: 'tcp' | 'udp'): MultiaddrClass
+    static fromNodeAddress(addr: NodeAddress, transport: 'tcp' | 'udp'): Multiaddr
 
     /**
      * Returns if something is a Multiaddr that is a name
@@ -323,7 +319,7 @@ declare module 'multiaddr' {
      * @param {MultiaddrClass} addr
      * @return {Bool} isName
      */
-    isName(addr: MultiaddrClass): boolean
+    static isName(addr: Multiaddr): boolean
 
     /**
      * Returns an array of multiaddrs, by resolving the multiaddr that is a name
@@ -332,6 +328,9 @@ declare module 'multiaddr' {
      * @param {MultiaddrClass} addr
      * @return {MultiaddrClass[]}
      */
-    resolve(addr: MultiaddrClass): Promise<MultiaddrClass[]>
+    static resolve(addr: Multiaddr): Promise<Multiaddr[]>
   }
+
+  export default function Multiaddr(addr: string | Buffer | Multiaddr): Multiaddr
+
 }
