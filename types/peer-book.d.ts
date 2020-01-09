@@ -1,5 +1,5 @@
 declare module 'peer-book' {
-  import Multiaddr, { MultiaddrClass } from 'multiaddr'
+  import Multiaddr from 'multiaddr'
   import PeerId from 'peer-id'
   import PeerInfo from 'peer-info'
 
@@ -33,7 +33,7 @@ declare module 'peer-book' {
 
     getAllArray(): PeerInfo[]
 
-    getMultiaddrs(peer: PeerInfo): MultiaddrClass
+    getMultiaddrs(peer: PeerInfo): Multiaddr
 
     remove(peer: PeerInfo): void
   }
