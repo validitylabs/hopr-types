@@ -3,7 +3,7 @@ declare module 'peer-book' {
   import PeerId from 'peer-id'
   import PeerInfo from 'peer-info'
 
-  export class PeerBookClass {
+  export default class PeerBook {
     _peers: {
       [index: string]: PeerInfo
     }
