@@ -153,7 +153,7 @@ declare module 'multiaddr' {
      * mh3.toString()
      * // '/ip4/8.8.8.8/tcp/1080/ip4/127.0.0.1/tcp/4001'
      */
-    encapsulate(addr: Multiaddr): Multiaddr
+    encapsulate(addr: Multiaddr | string): Multiaddr
 
     /**
      * Decapsulates a Multiaddr from another Multiaddr
