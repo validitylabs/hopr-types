@@ -22,10 +22,6 @@
     "type": "git",
     "url": "https://github.com/hoprnet/hopr-types.git"
   },
-  "devDependencies": {
-    "@types/levelup": "^4.3.0",
-    "@types/node": "~12"
-  },
   "prettier": {
     "printWidth": 160,
     "tabWidth": 2,
