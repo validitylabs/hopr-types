@@ -20,7 +20,7 @@
   "homepage": "https://hopr.network",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hoprnet/hopr-types.git"
+    "url": "https://github.com/validitylabs/hopr-types.git"
   },
   "prettier": {
     "printWidth": 160,
